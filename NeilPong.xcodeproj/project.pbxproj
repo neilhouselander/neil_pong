@@ -15,6 +15,11 @@
 		C11DC5EA1F3B87E40052E947 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C11DC5E81F3B87E40052E947 /* Main.storyboard */; };
 		C11DC5EC1F3B87E40052E947 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C11DC5EB1F3B87E40052E947 /* Assets.xcassets */; };
 		C11DC5EF1F3B87E40052E947 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C11DC5ED1F3B87E40052E947 /* LaunchScreen.storyboard */; };
+		C11DC5F71F3B88300052E947 /* backingTrack.wav in Resources */ = {isa = PBXBuildFile; fileRef = C11DC5F61F3B88300052E947 /* backingTrack.wav */; };
+		C11DC5F91F3B88370052E947 /* pongBlipSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = C11DC5F81F3B88370052E947 /* pongBlipSound.wav */; };
+		C11DC5FD1F3B890A0052E947 /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DC5FC1F3B890A0052E947 /* MainMenuScene.swift */; };
+		C11DC5FF1F3B898B0052E947 /* LLPIXEL3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C11DC5FE1F3B898B0052E947 /* LLPIXEL3.ttf */; };
+		C11DC6011F3B97C50052E947 /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DC6001F3B97C50052E947 /* GameOver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +33,11 @@
 		C11DC5EB1F3B87E40052E947 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C11DC5EE1F3B87E40052E947 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C11DC5F01F3B87E40052E947 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C11DC5F61F3B88300052E947 /* backingTrack.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = backingTrack.wav; sourceTree = "<group>"; };
+		C11DC5F81F3B88370052E947 /* pongBlipSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pongBlipSound.wav; sourceTree = "<group>"; };
+		C11DC5FC1F3B890A0052E947 /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
+		C11DC5FE1F3B898B0052E947 /* LLPIXEL3.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LLPIXEL3.ttf; sourceTree = "<group>"; };
+		C11DC6001F3B97C50052E947 /* GameOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,15 +70,20 @@
 		C11DC5DD1F3B87E40052E947 /* NeilPong */ = {
 			isa = PBXGroup;
 			children = (
+				C11DC5F61F3B88300052E947 /* backingTrack.wav */,
+				C11DC5F81F3B88370052E947 /* pongBlipSound.wav */,
+				C11DC5FE1F3B898B0052E947 /* LLPIXEL3.ttf */,
+				C11DC5EB1F3B87E40052E947 /* Assets.xcassets */,
 				C11DC5DE1F3B87E40052E947 /* AppDelegate.swift */,
 				C11DC5E01F3B87E40052E947 /* GameScene.sks */,
-				C11DC5E21F3B87E40052E947 /* Actions.sks */,
-				C11DC5E41F3B87E40052E947 /* GameScene.swift */,
-				C11DC5E61F3B87E40052E947 /* GameViewController.swift */,
 				C11DC5E81F3B87E40052E947 /* Main.storyboard */,
-				C11DC5EB1F3B87E40052E947 /* Assets.xcassets */,
 				C11DC5ED1F3B87E40052E947 /* LaunchScreen.storyboard */,
 				C11DC5F01F3B87E40052E947 /* Info.plist */,
+				C11DC5E21F3B87E40052E947 /* Actions.sks */,
+				C11DC5E61F3B87E40052E947 /* GameViewController.swift */,
+				C11DC5FC1F3B890A0052E947 /* MainMenuScene.swift */,
+				C11DC5E41F3B87E40052E947 /* GameScene.swift */,
+				C11DC6001F3B97C50052E947 /* GameOver.swift */,
 			);
 			path = NeilPong;
 			sourceTree = "<group>";
@@ -135,7 +150,10 @@
 			files = (
 				C11DC5EA1F3B87E40052E947 /* Main.storyboard in Resources */,
 				C11DC5E11F3B87E40052E947 /* GameScene.sks in Resources */,
+				C11DC5F71F3B88300052E947 /* backingTrack.wav in Resources */,
 				C11DC5EC1F3B87E40052E947 /* Assets.xcassets in Resources */,
+				C11DC5F91F3B88370052E947 /* pongBlipSound.wav in Resources */,
+				C11DC5FF1F3B898B0052E947 /* LLPIXEL3.ttf in Resources */,
 				C11DC5EF1F3B87E40052E947 /* LaunchScreen.storyboard in Resources */,
 				C11DC5E31F3B87E40052E947 /* Actions.sks in Resources */,
 			);
@@ -150,6 +168,8 @@
 			files = (
 				C11DC5E51F3B87E40052E947 /* GameScene.swift in Sources */,
 				C11DC5E71F3B87E40052E947 /* GameViewController.swift in Sources */,
+				C11DC5FD1F3B890A0052E947 /* MainMenuScene.swift in Sources */,
+				C11DC6011F3B97C50052E947 /* GameOver.swift in Sources */,
 				C11DC5DF1F3B87E40052E947 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
