@@ -23,6 +23,7 @@ enum gameType {
 }
 
 var gameScore = [0,0]
+var difficultyMultiplier = 1
 
 //end of globals
 
@@ -49,9 +50,10 @@ class GameViewController: UIViewController {
         //prep scene to load
         if let view = self.view as! SKView? {
             
-            let scene = MainMenuScene(size: CGSize(width: 1536, height: 2048))
+            let scene = MainMenuScene(size: CGSize(width: 750, height: 1334))
             
             scene.scaleMode = SKSceneScaleMode.aspectFill
+            
             
             //present scene
             view.presentScene(scene)

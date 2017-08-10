@@ -27,9 +27,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //physics
     struct PhysicsCategories{
         static let None: UInt32 = 0 //0
-        static let Bat: UInt32 = 0b1 //1
+        static let BatAndBorder: UInt32 = 0b1 //1
         static let Ball: UInt32 = 0b10 //2
-        static let Border:UInt32 = 0b100 //3
+        
     }
     
     //gameStates - do i need this? 
@@ -40,6 +40,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     //random utilities - for the ball
+    func randomInt(min:Int, max:Int) -> Int {
+        
+        return min + Int(arc4random_uniform(UInt32(max-min + 1)))
+        
+    }
+    
+    var randomDx:Int = 0
+    var randomDy:Int = 0
     
     //update game area
     let gameArea:CGRect
@@ -72,20 +80,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let border = SKPhysicsBody(edgeLoopFrom: self.frame)
         border.friction = 0
         border.restitution = 1
+//        self.physicsBody?.categoryBitMask = PhysicsCategories.BatAndBorder
+//        self.physicsBody?.collisionBitMask = PhysicsCategories.Ball
+//        self.physicsBody?.contactTestBitMask = PhysicsCategories.Ball
         
         self.physicsBody = border
         
         //add the assets
-        ball.setScale(1.0)
+        ball.setScale(0.5)
         ball.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         ball.zPosition = 1
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2)
         ball.physicsBody!.affectedByGravity = false
+        ball.physicsBody?.angularDamping = 0
+        ball.physicsBody?.linearDamping = 0
+        ball.physicsBody?.isDynamic = true
         ball.physicsBody!.friction = 0
         ball.physicsBody!.restitution = 1
         ball.physicsBody!.categoryBitMask = PhysicsCategories.Ball
-        ball.physicsBody!.collisionBitMask = PhysicsCategories.Bat
-        ball.physicsBody!.contactTestBitMask = PhysicsCategories.Bat
+        ball.physicsBody!.collisionBitMask = PhysicsCategories.BatAndBorder
+        ball.physicsBody!.contactTestBitMask = PhysicsCategories.BatAndBorder
         self.addChild(ball)
         
         playerBat.setScale(1.0)
@@ -95,7 +109,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerBat.physicsBody?.affectedByGravity = false
         playerBat.physicsBody?.friction = 0
         playerBat.physicsBody?.restitution = 1
-        playerBat.physicsBody?.categoryBitMask = PhysicsCategories.Bat
+        playerBat.physicsBody?.isDynamic = false
+        playerBat.physicsBody?.categoryBitMask = PhysicsCategories.BatAndBorder
         playerBat.physicsBody?.collisionBitMask = PhysicsCategories.Ball
         playerBat.physicsBody?.contactTestBitMask = PhysicsCategories.Ball
         self.addChild(playerBat)
@@ -107,15 +122,86 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemyBat.physicsBody?.affectedByGravity = false
         enemyBat.physicsBody?.friction = 0
         enemyBat.physicsBody?.restitution = 1
-        enemyBat.physicsBody?.categoryBitMask = PhysicsCategories.Bat
+        enemyBat.physicsBody?.isDynamic = false
+        enemyBat.physicsBody?.categoryBitMask = PhysicsCategories.BatAndBorder
         enemyBat.physicsBody?.collisionBitMask = PhysicsCategories.Ball
         enemyBat.physicsBody?.contactTestBitMask = PhysicsCategories.Ball
         self.addChild(enemyBat)
         
+        playerOneScoreLabel.text = "0"
+        playerOneScoreLabel.fontSize = 65
+        playerOneScoreLabel.fontColor = SKColor.white
+        playerOneScoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height*0.40)
+        playerOneScoreLabel.zPosition = 100
+        self.addChild(playerOneScoreLabel)
+        
+        playerTwoScoreLabel.text = "4"
+        playerTwoScoreLabel.fontSize = 65
+        playerTwoScoreLabel.fontColor = SKColor.white
+        playerTwoScoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height*0.60)
+        playerTwoScoreLabel.zRotation = CGFloat(Double.pi)
+        playerTwoScoreLabel.zPosition = 100
+        self.addChild(playerTwoScoreLabel)
+        
+        startGame()
         
         
     }
     
+    
+    
+    func startGame(){
+        
+        gameScore = [0,0]
+        playerOneScoreLabel.text = "\(gameScore[0])"
+        playerTwoScoreLabel.text = "\(gameScore[1])"
+        
+        //set initial ball velocity
+
+        generateRandomDirection()
+        
+        ball.physicsBody?.applyImpulse(CGVector(dx: randomDx, dy: randomDy))
+        
+ 
+    }
+    
+    func generateRandomDirection() {
+        
+        switch currentGameType {
+        case .easy: difficultyMultiplier = 10
+        case .medium: difficultyMultiplier = 20
+        case .hard: difficultyMultiplier = 30
+        case .twoPlayer: difficultyMultiplier = 10
+       
+            
+        }
+        
+        let randomPlusOrMinus = randomInt(min: 0, max: 3)
+        
+        switch randomPlusOrMinus {
+            
+        case 0:
+            randomDx = -5 + difficultyMultiplier
+            randomDy = -5 + difficultyMultiplier
+        case 1:
+            randomDx = 5 + difficultyMultiplier
+            randomDy = -5 + difficultyMultiplier
+
+        case 2:
+            randomDx = 5 + difficultyMultiplier
+            randomDy = 5 + difficultyMultiplier
+
+        case 3:
+            randomDx = -5 + difficultyMultiplier
+            randomDy = 5 + difficultyMultiplier
+
+        default:
+            randomDx = 5 + difficultyMultiplier
+            randomDy = 5 + difficultyMultiplier
+            print("randomdirection function failed - default used")
+        }
+
+    }
     
     
     override func update(_ currentTime: TimeInterval) {
