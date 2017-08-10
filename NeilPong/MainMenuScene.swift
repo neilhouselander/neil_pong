@@ -11,13 +11,6 @@
 import Foundation
 import SpriteKit
 
-enum gameType {
-    case easy
-    case medium
-    case hard
-    case twoPlayer
-}
-
 
 
 class MainMenuScene:SKScene {
@@ -122,7 +115,7 @@ class MainMenuScene:SKScene {
                 
             }
             
-            let sceneToMoveTo = GameOver(size: self.size)
+            let sceneToMoveTo = GameScene(size: self.size)
             sceneToMoveTo.scaleMode = self.scaleMode
             let theTransition = SKTransition.fade(withDuration: 1.0)
             self.view?.presentScene(sceneToMoveTo, transition: theTransition)

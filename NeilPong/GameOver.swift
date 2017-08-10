@@ -15,6 +15,25 @@ class GameOver: SKScene {
     
     override func didMove(to view: SKView) {
         
+        //who is the winner logic
+        var winner = ""
+        if gameScore[0] > gameScore [1] {
+            
+            winner = "Player 1"
+        }
+            
+        else if gameScore[0] < gameScore[1] && currentGameType == gameType.twoPlayer {
+            
+            winner = "Player 2"
+            
+        }
+        else {
+            
+            winner = "Computer"
+            
+        }
+        
+        //set up scene
         self.backgroundColor = SKColor.black
         
         let gameOverTitle = SKLabelNode(fontNamed: "LLPixel")
@@ -26,7 +45,7 @@ class GameOver: SKScene {
         self.addChild(gameOverTitle)
         
         let winnerLabel = SKLabelNode(fontNamed: "LLPixel")
-        winnerLabel.text = "Winner: "
+        winnerLabel.text = "Winner: \(winner)"
         winnerLabel.fontSize = 100
         winnerLabel.fontColor = SKColor.white
         winnerLabel.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.70)
@@ -41,8 +60,7 @@ class GameOver: SKScene {
         restartLabel.zPosition = 1
         self.addChild(restartLabel)
         
-        
-        
+
     }
     
     
@@ -65,7 +83,5 @@ class GameOver: SKScene {
         
     }
     
-    
-    
-    
+
 }

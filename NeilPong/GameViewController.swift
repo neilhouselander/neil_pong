@@ -9,12 +9,44 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import AVFoundation
+
+
+//add globals here so works from main menu over into game play & into game over
+var currentGameType = gameType.medium
+
+enum gameType {
+    case easy
+    case medium
+    case hard
+    case twoPlayer
+}
+
+var gameScore = [0,0]
+
+//end of globals
+
 
 class GameViewController: UIViewController {
+    
+    
+    var backingAudio = AVAudioPlayer()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //play backing music
+        let filePath = Bundle.main.path(forResource: "backingTrack", ofType: "wav")
+        let audioNSURL = NSURL(fileURLWithPath: filePath!)
+        
+        do {backingAudio = try AVAudioPlayer(contentsOf: audioNSURL as URL) }
+        catch {return print("Cannot find backing music")}
+        
+        backingAudio.numberOfLoops = -1
+        //backingAudio.play()
+        
+        //prep scene to load
         if let view = self.view as! SKView? {
             
             let scene = MainMenuScene(size: CGSize(width: 1536, height: 2048))
