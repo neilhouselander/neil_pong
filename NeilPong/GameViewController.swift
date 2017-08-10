@@ -23,7 +23,7 @@ enum gameType {
 }
 
 var gameScore = [0,0]
-var difficultyMultiplier = 1
+var difficultyMultiplier = 1 //this affects speed of ball used in generateRandomDirection function in gamescene
 
 //end of globals
 
