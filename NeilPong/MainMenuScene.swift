@@ -11,7 +11,7 @@
 import Foundation
 import SpriteKit
 
-
+var currentGameType = gameType.easy
 
 class MainMenuScene:SKScene {
     
@@ -28,7 +28,7 @@ class MainMenuScene:SKScene {
         
         
         mainTitle.text = "Neil Pong !"
-        mainTitle.fontSize = 140
+        mainTitle.fontSize = 100
         mainTitle.fontColor = SKColor.white
         mainTitle.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.80)
         mainTitle.zPosition = 1
@@ -36,7 +36,7 @@ class MainMenuScene:SKScene {
         
         
         gameSettingEasyLabel.text = "Easy"
-        gameSettingEasyLabel.fontSize = 100
+        gameSettingEasyLabel.fontSize = 75
         gameSettingEasyLabel.fontColor = SKColor.white
         gameSettingEasyLabel.position = CGPoint(x: self.size.width + self.size.width, y: self.size.height * 0.60)
         gameSettingEasyLabel.zPosition = 1
@@ -45,7 +45,7 @@ class MainMenuScene:SKScene {
         
         
         gameSettingMediumLabel.text = "Medium"
-        gameSettingMediumLabel.fontSize = 100
+        gameSettingMediumLabel.fontSize = 75
         gameSettingMediumLabel.fontColor = SKColor.white
         gameSettingMediumLabel.position = CGPoint(x: -self.size.width - self.size.width, y: self.size.height * 0.50)
         gameSettingMediumLabel.zPosition = 1
@@ -54,7 +54,7 @@ class MainMenuScene:SKScene {
         
         
         gameSettingHardLabel.text = "Hard"
-        gameSettingHardLabel.fontSize = 100
+        gameSettingHardLabel.fontSize = 75
         gameSettingHardLabel.fontColor = SKColor.white
         gameSettingHardLabel.position = CGPoint(x: self.size.width + self.size.width, y: self.size.height * 0.40)
         gameSettingHardLabel.zPosition = 1
@@ -63,7 +63,7 @@ class MainMenuScene:SKScene {
         
         
         twoPlayerLabel.text = "2 Player"
-        twoPlayerLabel.fontSize = 100
+        twoPlayerLabel.fontSize = 75
         twoPlayerLabel.fontColor = SKColor.white
         twoPlayerLabel.position = CGPoint(x: -self.size.width - self.size.width, y: self.size.height * 0.30)
         twoPlayerLabel.zPosition = 1

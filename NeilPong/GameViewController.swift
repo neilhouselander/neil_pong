@@ -13,7 +13,7 @@ import AVFoundation
 
 
 //add globals here so works from main menu over into game play & into game over
-var currentGameType = gameType.medium
+
 
 enum gameType {
     case easy
@@ -22,8 +22,10 @@ enum gameType {
     case twoPlayer
 }
 
-var gameScore = [0,0]
-var difficultyMultiplier = 1 //this affects speed of ball used in generateRandomDirection function in gamescene
+
+
+
+
 
 //end of globals
 
@@ -48,11 +50,13 @@ class GameViewController: UIViewController {
         //backingAudio.play()
         
         //prep scene to load
+
+        
         if let view = self.view as! SKView? {
             
             let scene = MainMenuScene(size: CGSize(width: 750, height: 1334))
             
-            scene.scaleMode = SKSceneScaleMode.aspectFill
+            scene.scaleMode = SKSceneScaleMode.aspectFit
             
             
             //present scene

@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-
+var gameScore = [Int]()
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -46,27 +46,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    var randomDx:Int = 0
-    var randomDy:Int = 0
-    
-    //update game area
-    let gameArea:CGRect
-    
-    override init(size: CGSize) {
-        
-        let maxAspectRatio: CGFloat = 16.0/9.0
-        let playableWidth = size.height/maxAspectRatio
-        let margin = (size.width - playableWidth)/2
-        gameArea = CGRect(x: margin, y: 0.00, width: playableWidth, height: size.height)
-        
-        super.init(size: size)
-        
-    }
 
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    //update game area
+//    let gameArea:CGRect
+//    
+//    override init(size: CGSize) {
+//        
+//        let maxAspectRatio: CGFloat = 16.0/9.0
+//        let playableWidth = size.height/maxAspectRatio
+//        let margin = (size.width - playableWidth)/2
+//        gameArea = CGRect(x: margin, y: 0.00, width: playableWidth, height: size.height)
+//        
+//        super.init(size: size)
+//        
+//    }
+//
+//    
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     //end of game area set up
     
@@ -80,9 +79,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let border = SKPhysicsBody(edgeLoopFrom: self.frame)
         border.friction = 0
         border.restitution = 1
-//        self.physicsBody?.categoryBitMask = PhysicsCategories.BatAndBorder
-//        self.physicsBody?.collisionBitMask = PhysicsCategories.Ball
-//        self.physicsBody?.contactTestBitMask = PhysicsCategories.Ball
+
         
         self.physicsBody = border
         
@@ -90,6 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.setScale(0.5)
         ball.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         ball.zPosition = 1
+        ball.name = "ball"
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2)
         ball.physicsBody!.affectedByGravity = false
         ball.physicsBody?.angularDamping = 0
@@ -105,6 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerBat.setScale(1.0)
         playerBat.position = CGPoint(x: self.size.width/2, y: self.size.height*0.10)
         playerBat.zPosition = 1
+        playerBat.name = "playerBat"
         playerBat.physicsBody = SKPhysicsBody(rectangleOf: playerBat.size)
         playerBat.physicsBody?.affectedByGravity = false
         playerBat.physicsBody?.friction = 0
@@ -118,6 +117,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemyBat.setScale(1.0)
         enemyBat.position = CGPoint(x: self.size.width/2, y: self.size.height*0.90)
         enemyBat.zPosition = 1
+        enemyBat.name = "enemyBat"
         enemyBat.physicsBody = SKPhysicsBody(rectangleOf: enemyBat.size)
         enemyBat.physicsBody?.affectedByGravity = false
         enemyBat.physicsBody?.friction = 0
@@ -149,7 +149,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    
     func startGame(){
         
         gameScore = [0,0]
@@ -159,13 +158,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //set initial ball velocity
 
         generateRandomDirection()
-        
-        ball.physicsBody?.applyImpulse(CGVector(dx: randomDx, dy: randomDy))
-        
- 
+
     }
     
     func generateRandomDirection() {
+        
+        var difficultyMultiplier:Int
         
         switch currentGameType {
         case .easy: difficultyMultiplier = 10
@@ -175,6 +173,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        
             
         }
+        
+        var randomDx:Int = 0
+        var randomDy:Int = 0
         
         let randomPlusOrMinus = randomInt(min: 0, max: 3)
         
@@ -200,12 +201,156 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             randomDy = 5 + difficultyMultiplier
             print("randomdirection function failed - default used")
         }
+        
+        ball.physicsBody?.applyImpulse(CGVector(dx: randomDx, dy: randomDy))
 
     }
     
+    func addScore(playerWhoWon: SKSpriteNode) {
+        
+        ball.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+        ball.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        
+        if playerWhoWon == playerBat {
+            
+            gameScore[0] += 1
+            
+        }
+            
+        else if playerWhoWon == enemyBat {
+            
+            gameScore[1] += 1
+            
+        }
+        
+
+        
+        //update scores on screen
+        playerTwoScoreLabel.text = "\(gameScore[1])"
+        playerOneScoreLabel.text = "\(gameScore[0])"
+        
+        //check for game over if not get ball moving
+                if gameScore[0] > 10  {
+        
+                    gameOver()
+                }
+        
+                else if gameScore[1] > 10 {
+        
+                    gameOver()
+                }
+        
+                else {
+        
+                    generateRandomDirection()
+
+                }
+        
+    }
+
+
     
+    func gameOver(){
+        
+        self.removeAllActions()
+        
+        self.enumerateChildNodes(withName: "ball", using: {
+            ball, stop in
+            ball.removeAllActions()
+        })
+        
+        self.enumerateChildNodes(withName: "playerBat", using: {
+            player, stop in
+            player.removeAllActions()
+        })
+        
+        self.enumerateChildNodes(withName: "enemyBat", using: {
+            enemy, stop in
+            enemy.removeAllActions()
+        })
+        
+        //move to gameover scene
+        let changeSceneAction = SKAction.run(changeScene)
+        let waitToChangeScene = SKAction.wait(forDuration: 1)
+        let changeSequence = SKAction.sequence([waitToChangeScene, changeSceneAction])
+        self.run(changeSequence)
+        
+    }
+    
+    func changeScene(){
+        
+        let sceneToMoveTo = GameOver(size:self.size)
+        sceneToMoveTo.scaleMode = self.scaleMode
+        let theTransition = SKTransition.fade(withDuration: 0.5)
+        self.view?.presentScene(sceneToMoveTo, transition: theTransition)
+        
+    }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        
+        
+        
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    func enemyLogic(){
+        
+        switch currentGameType {
+            
+        case .easy:
+            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.8)
+            enemyBat.run(enemyMoveAction)
+            break
+            
+        case .medium:
+            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.5)
+            enemyBat.run(enemyMoveAction)
+            break
+            
+        case .hard:
+            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.3)
+            enemyBat.run(enemyMoveAction)
+            break
+            
+        case .twoPlayer:
+            break
+            
+        }
+        
+    }
+    
+    
+
+    //use this to control how fast enemy bat is in one player games ALSO to determine wheter point scored
     override func update(_ currentTime: TimeInterval) {
         
+        enemyLogic()
+        
+        
+        //score or no score if ball position.y is less than player.y = enemy scores. If ball.y is greater than enemy - i score
+
+        
+        if ball.position.y <= playerBat.position.y - 90 {
+            
+            addScore(playerWhoWon: enemyBat)
+            
+        }
+        else if ball.position.y >= enemyBat.position.y + 90 {
+            
+            addScore(playerWhoWon: playerBat)
+            
+        }
         
     }
 
