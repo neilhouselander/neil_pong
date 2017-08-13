@@ -49,23 +49,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     
     //update game area
-//    let gameArea:CGRect
-//    
-//    override init(size: CGSize) {
-//        
-//        let maxAspectRatio: CGFloat = 16.0/9.0
-//        let playableWidth = size.height/maxAspectRatio
-//        let margin = (size.width - playableWidth)/2
-//        gameArea = CGRect(x: margin, y: 0.00, width: playableWidth, height: size.height)
-//        
-//        super.init(size: size)
-//        
-//    }
-//
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    let gameArea:CGRect
+    
+    override init(size: CGSize) {
+        
+        let maxAspectRatio: CGFloat = 16.0/9.0
+        let playableWidth = size.height/maxAspectRatio
+        let margin = (size.width - playableWidth)/2
+        gameArea = CGRect(x: margin, y: 0.00, width: playableWidth, height: size.height)
+        
+        super.init(size: size)
+        
+    }
+
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //end of game area set up
     
@@ -163,7 +163,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func generateRandomDirection() {
         
-        var difficultyMultiplier:Int
+        var difficultyMultiplier:Int = 0
         
         switch currentGameType {
         case .easy: difficultyMultiplier = 10
@@ -223,8 +223,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         
-
-        
+   
         //update scores on screen
         playerTwoScoreLabel.text = "\(gameScore[1])"
         playerOneScoreLabel.text = "\(gameScore[0])"
@@ -271,7 +270,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //move to gameover scene
         let changeSceneAction = SKAction.run(changeScene)
-        let waitToChangeScene = SKAction.wait(forDuration: 1)
+        let waitToChangeScene = SKAction.wait(forDuration: 2)
         let changeSequence = SKAction.sequence([waitToChangeScene, changeSceneAction])
         self.run(changeSequence)
         
@@ -289,12 +288,67 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        for touch in touches {
+            
+            let location = touch.location(in: self)
+            
+            let playerMoveAction = SKAction.moveTo(x: location.x, duration: 0.01)
+            
+            if currentGameType == gameType.twoPlayer {
+                
+                if location.y > 0 {
+                    
+                    enemyBat.run(playerMoveAction)
+                }
+                
+                if location.y < 0 {
+                    
+                    playerBat.run(playerMoveAction)
+                }
+            }
+                
+            else {
+                playerBat.run(playerMoveAction)
+            }
+            
+        }
         
         
         
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        for touch in touches {
+            
+            let location = touch.location(in: self)
+            
+            let playerMoveAction = SKAction.moveTo(x: location.x, duration: 0.01)
+            
+            if currentGameType == gameType.twoPlayer {
+                
+                if location.y > 0 {
+                    
+                    enemyBat.run(playerMoveAction)
+                }
+                
+                if location.y < 0 {
+                    
+                    playerBat.run(playerMoveAction)
+                }
+            }
+            
+            else {
+                playerBat.run(playerMoveAction)
+            }
+            
+        }
+        
+
+        
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
         
         
         
@@ -329,8 +383,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
     }
-    
-    
 
     //use this to control how fast enemy bat is in one player games ALSO to determine wheter point scored
     override func update(_ currentTime: TimeInterval) {

@@ -60,7 +60,7 @@ class GameOver: SKScene {
         winnerLabel.text = "\(winner)"
         winnerLabel.fontSize = 80
         winnerLabel.fontColor = SKColor.white
-        winnerLabel.position = CGPoint(x: self.size.width * 0.70, y: self.size.height * 0.50)
+        winnerLabel.position = CGPoint(x: self.size.width * 0.70, y: self.size.height*0.5)
         winnerLabel.zPosition = 1
         self.addChild(winnerLabel)
         
