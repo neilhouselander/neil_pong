@@ -83,6 +83,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.physicsBody = border
         
+        //set up bat size dependant on difficulty
+        
+        switch currentGameType {
+            
+        case .easy: playerBat.size = CGSize(width: 200, height: 30)
+        case .medium: playerBat.size = CGSize(width: 150, height: 30)
+        case .hard: playerBat.size = CGSize(width: 100, height: 30)
+        default: playerBat.size = CGSize(width: 200, height: 30)
+            
+        }
+        
         //add the assets
         ball.setScale(0.5)
         ball.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
