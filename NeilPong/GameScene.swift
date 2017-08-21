@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //physics
     struct PhysicsCategories{
         static let None: UInt32 = 0 //0
-        static let BatAndBorder: UInt32 = 0b1 //1
+        static let Bat: UInt32 = 0b1 //1
         static let Ball: UInt32 = 0b10 //2
         
     }
@@ -107,8 +107,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.physicsBody!.friction = 0
         ball.physicsBody!.restitution = 1
         ball.physicsBody!.categoryBitMask = PhysicsCategories.Ball
-        ball.physicsBody!.collisionBitMask = PhysicsCategories.BatAndBorder
-        ball.physicsBody!.contactTestBitMask = PhysicsCategories.BatAndBorder
+        ball.physicsBody!.collisionBitMask = PhysicsCategories.Bat
+        ball.physicsBody!.contactTestBitMask = PhysicsCategories.Bat
         self.addChild(ball)
         
         playerBat.setScale(1.0)
@@ -120,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerBat.physicsBody?.friction = 0
         playerBat.physicsBody?.restitution = 1
         playerBat.physicsBody?.isDynamic = false
-        playerBat.physicsBody?.categoryBitMask = PhysicsCategories.BatAndBorder
+        playerBat.physicsBody?.categoryBitMask = PhysicsCategories.Bat
         playerBat.physicsBody?.collisionBitMask = PhysicsCategories.Ball
         playerBat.physicsBody?.contactTestBitMask = PhysicsCategories.Ball
         self.addChild(playerBat)
@@ -134,7 +134,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemyBat.physicsBody?.friction = 0
         enemyBat.physicsBody?.restitution = 1
         enemyBat.physicsBody?.isDynamic = false
-        enemyBat.physicsBody?.categoryBitMask = PhysicsCategories.BatAndBorder
+        enemyBat.physicsBody?.categoryBitMask = PhysicsCategories.Bat
         enemyBat.physicsBody?.collisionBitMask = PhysicsCategories.Ball
         enemyBat.physicsBody?.contactTestBitMask = PhysicsCategories.Ball
         self.addChild(enemyBat)
@@ -169,14 +169,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //set initial ball velocity
 
         generateRandomDirection()
+  
+        
+        
 
     }
+    
+ 
+    
+    
     
     func generateRandomDirection() {
         
         var difficultyMultiplier:Int = 0
         
         switch currentGameType {
+            
         case .easy: difficultyMultiplier = 10
         case .medium: difficultyMultiplier = 20
         case .hard: difficultyMultiplier = 30
@@ -193,18 +201,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         switch randomPlusOrMinus {
             
         case 0:
-            randomDx = -5 + difficultyMultiplier
-            randomDy = -5 + difficultyMultiplier
+            randomDx = -5 - difficultyMultiplier
+            randomDy = -5 - difficultyMultiplier
         case 1:
             randomDx = 5 + difficultyMultiplier
-            randomDy = -5 + difficultyMultiplier
+            randomDy = -5 - difficultyMultiplier
 
         case 2:
             randomDx = 5 + difficultyMultiplier
             randomDy = 5 + difficultyMultiplier
 
         case 3:
-            randomDx = -5 + difficultyMultiplier
+            randomDx = -5 - difficultyMultiplier
             randomDy = 5 + difficultyMultiplier
 
         default:
@@ -216,6 +224,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.physicsBody?.applyImpulse(CGVector(dx: randomDx, dy: randomDy))
 
     }
+    
+    
+
     
     func addScore(playerWhoWon: SKSpriteNode) {
         
@@ -240,16 +251,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerOneScoreLabel.text = "\(gameScore[0])"
         
         //check for game over if not get ball moving
-                if gameScore[0] > 10  {
+                if gameScore[0] > 10 || gameScore[1] > 10  {
         
                     gameOver()
                 }
-        
-                else if gameScore[1] > 10 {
-        
-                    gameOver()
-                }
-        
+
                 else {
         
                     generateRandomDirection()
@@ -257,9 +263,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
         
     }
-
-
     
+
     func gameOver(){
         
         self.removeAllActions()
@@ -297,6 +302,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for touch in touches {
@@ -307,12 +313,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             if currentGameType == gameType.twoPlayer {
                 
-                if location.y > 0 {
+                if location.y > self.size.height/2 {
                     
                     enemyBat.run(playerMoveAction)
                 }
                 
-                if location.y < 0 {
+                if location.y < self.size.height/2 {
                     
                     playerBat.run(playerMoveAction)
                 }
@@ -334,16 +340,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             let location = touch.location(in: self)
             
+            
+            
             let playerMoveAction = SKAction.moveTo(x: location.x, duration: 0.01)
             
             if currentGameType == gameType.twoPlayer {
                 
-                if location.y > 0 {
+                if location.y > self.size.height/2 {
                     
                     enemyBat.run(playerMoveAction)
                 }
                 
-                if location.y < 0 {
+                if location.y < self.size.height/2 {
                     
                     playerBat.run(playerMoveAction)
                 }
@@ -359,13 +367,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    
     func didBegin(_ contact: SKPhysicsContact) {
         
+        var body1 = SKPhysicsBody()
+        var body2 = SKPhysicsBody()
         
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            
+            body1 = contact.bodyA
+            body2 = contact.bodyB
+            
+        }
+        else {
+            
+            body1 = contact.bodyB
+            body2 = contact.bodyA
+        }
         
-        
-        
-        
+        if body1.categoryBitMask == PhysicsCategories.Bat && body2.categoryBitMask == PhysicsCategories.Ball {
+            
+            run(hitBatSound)
+        }
         
     }
     
@@ -374,17 +397,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         switch currentGameType {
             
         case .easy:
-            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.8)
+            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.7)
             enemyBat.run(enemyMoveAction)
             break
             
         case .medium:
-            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.5)
+            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.4)
             enemyBat.run(enemyMoveAction)
             break
             
         case .hard:
-            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.3)
+            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.2)
             enemyBat.run(enemyMoveAction)
             break
             
@@ -394,6 +417,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
     }
+    
+
 
     //use this to control how fast enemy bat is in one player games ALSO to determine wheter point scored
     override func update(_ currentTime: TimeInterval) {
@@ -416,5 +441,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
     }
+    
+    
+    
 
 }

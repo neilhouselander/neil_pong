@@ -58,7 +58,7 @@ class GameOver: SKScene {
         let winnerLabel = SKLabelNode(fontNamed: "LLPixel")
         winnerLabel.alpha = 0
         winnerLabel.text = "\(winner)"
-        winnerLabel.fontSize = 80
+        winnerLabel.fontSize = 70
         winnerLabel.fontColor = SKColor.white
         winnerLabel.position = CGPoint(x: self.size.width * 0.70, y: self.size.height*0.5)
         winnerLabel.zPosition = 1
@@ -68,7 +68,7 @@ class GameOver: SKScene {
         restartLabel.text = "Restart"
         restartLabel.fontColor = SKColor.white
         restartLabel.fontSize = 80
-        restartLabel.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.40)
+        restartLabel.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.30)
         restartLabel.zPosition = 1
         self.addChild(restartLabel)
         
