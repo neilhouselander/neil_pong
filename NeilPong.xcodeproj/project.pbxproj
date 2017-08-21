@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C11DC5DF1F3B87E40052E947 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DC5DE1F3B87E40052E947 /* AppDelegate.swift */; };
-		C11DC5E11F3B87E40052E947 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C11DC5E01F3B87E40052E947 /* GameScene.sks */; };
 		C11DC5E31F3B87E40052E947 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = C11DC5E21F3B87E40052E947 /* Actions.sks */; };
 		C11DC5E51F3B87E40052E947 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DC5E41F3B87E40052E947 /* GameScene.swift */; };
 		C11DC5E71F3B87E40052E947 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DC5E61F3B87E40052E947 /* GameViewController.swift */; };
@@ -25,7 +24,6 @@
 /* Begin PBXFileReference section */
 		C11DC5DB1F3B87E40052E947 /* NeilPong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeilPong.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C11DC5DE1F3B87E40052E947 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C11DC5E01F3B87E40052E947 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		C11DC5E21F3B87E40052E947 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		C11DC5E41F3B87E40052E947 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		C11DC5E61F3B87E40052E947 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -75,7 +73,6 @@
 				C11DC5FE1F3B898B0052E947 /* LLPIXEL3.ttf */,
 				C11DC5EB1F3B87E40052E947 /* Assets.xcassets */,
 				C11DC5DE1F3B87E40052E947 /* AppDelegate.swift */,
-				C11DC5E01F3B87E40052E947 /* GameScene.sks */,
 				C11DC5E81F3B87E40052E947 /* Main.storyboard */,
 				C11DC5ED1F3B87E40052E947 /* LaunchScreen.storyboard */,
 				C11DC5F01F3B87E40052E947 /* Info.plist */,
@@ -149,7 +146,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C11DC5EA1F3B87E40052E947 /* Main.storyboard in Resources */,
-				C11DC5E11F3B87E40052E947 /* GameScene.sks in Resources */,
 				C11DC5F71F3B88300052E947 /* backingTrack.wav in Resources */,
 				C11DC5EC1F3B87E40052E947 /* Assets.xcassets in Resources */,
 				C11DC5F91F3B88370052E947 /* pongBlipSound.wav in Resources */,
@@ -338,6 +334,7 @@
 				C11DC5F51F3B87E40052E947 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

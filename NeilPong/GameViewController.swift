@@ -24,9 +24,6 @@ enum gameType {
 
 
 
-
-
-
 //end of globals
 
 
@@ -47,7 +44,7 @@ class GameViewController: UIViewController {
         catch {return print("Cannot find backing music")}
         
         backingAudio.numberOfLoops = -1
-        //backingAudio.play()
+        backingAudio.play()
         
         //prep scene to load
 
