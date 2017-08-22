@@ -21,6 +21,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let playerBat = SKSpriteNode(imageNamed: "myBat")
     let enemyBat = SKSpriteNode(imageNamed: "enemyBat")
     
+    let tapToStartLabel = SKLabelNode(fontNamed: "LLPixel")
+    
     //sound effects -declare here to avoid lag
     let hitBatSound = SKAction.playSoundFileNamed("pongBlipSound.wav", waitForCompletion: false)
     
@@ -39,6 +41,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case inGame
     }
     
+    var currentGameState = gameState.preGame
+    
     //random utilities - for the ball
     func randomInt(min:Int, max:Int) -> Int {
         
@@ -46,7 +50,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-
     
     //update game area
     let gameArea:CGRect
@@ -66,6 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     
     //end of game area set up
     
@@ -112,7 +116,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(ball)
         
         playerBat.setScale(1.0)
-        playerBat.position = CGPoint(x: self.size.width/2, y: self.size.height*0.10)
+        playerBat.position = CGPoint(x: self.size.width/2, y: 0 - playerBat.size.height)
         playerBat.zPosition = 1
         playerBat.name = "playerBat"
         playerBat.physicsBody = SKPhysicsBody(rectangleOf: playerBat.size)
@@ -126,7 +130,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(playerBat)
         
         enemyBat.setScale(1.0)
-        enemyBat.position = CGPoint(x: self.size.width/2, y: self.size.height*0.90)
+        enemyBat.position = CGPoint(x: self.size.width/2, y: self.size.height + enemyBat.size.height)
         enemyBat.zPosition = 1
         enemyBat.name = "enemyBat"
         enemyBat.physicsBody = SKPhysicsBody(rectangleOf: enemyBat.size)
@@ -146,7 +150,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerOneScoreLabel.zPosition = 100
         self.addChild(playerOneScoreLabel)
         
-        playerTwoScoreLabel.text = "4"
+        playerTwoScoreLabel.text = "0"
         playerTwoScoreLabel.fontSize = 65
         playerTwoScoreLabel.fontColor = SKColor.white
         playerTwoScoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height*0.60)
@@ -154,31 +158,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerTwoScoreLabel.zPosition = 100
         self.addChild(playerTwoScoreLabel)
         
-        startGame()
-        
-        
+        tapToStartLabel.text = "Touch To Begin"
+        tapToStartLabel.fontSize = 70
+        tapToStartLabel.fontColor = SKColor.white
+        tapToStartLabel.position = CGPoint(x: self.size.width*0.5, y: self.size.height*0.7)
+        tapToStartLabel.zPosition = 101
+        self.addChild(tapToStartLabel)
+
     }
     
     
     func startGame(){
         
+        currentGameState = gameState.inGame
+        
+        
+        //remove tap to start label
+        let tapLabelFadeAction = SKAction.fadeOut(withDuration: 0.2)
+        let deleteLabelAction = SKAction.removeFromParent()
+        
+        let deletesequence = SKAction.sequence([tapLabelFadeAction, deleteLabelAction])
+        tapToStartLabel.run(deletesequence)
+        
+        
+        //initial game initialisation
         gameScore = [0,0]
         playerOneScoreLabel.text = "\(gameScore[0])"
         playerTwoScoreLabel.text = "\(gameScore[1])"
         
+        //bring on players
+        let movePlayerOneOnScreen = SKAction.moveTo(y: self.size.height*0.10, duration: 0.2)
+        let movePlayerTwoOnScreen = SKAction.moveTo(y: self.size.height*0.90, duration: 0.2)
+        
+        playerBat.run(movePlayerOneOnScreen)
+        enemyBat.run(movePlayerTwoOnScreen)
+        
+        
         //set initial ball velocity
-
         generateRandomDirection()
-  
-        
-        
 
     }
     
- 
-    
-    
-    
+
     func generateRandomDirection() {
         
         var difficultyMultiplier:Int = 0
@@ -188,9 +209,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case .easy: difficultyMultiplier = 10
         case .medium: difficultyMultiplier = 20
         case .hard: difficultyMultiplier = 30
-        case .twoPlayer: difficultyMultiplier = 10
+        case .twoPlayer: difficultyMultiplier = 20
        
-            
         }
         
         var randomDx:Int = 0
@@ -225,9 +245,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     }
     
-    
 
-    
     func addScore(playerWhoWon: SKSpriteNode) {
         
         ball.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
@@ -245,7 +263,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         
-   
         //update scores on screen
         playerTwoScoreLabel.text = "\(gameScore[1])"
         playerOneScoreLabel.text = "\(gameScore[0])"
@@ -261,7 +278,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     generateRandomDirection()
 
                 }
-        
     }
     
 
@@ -269,28 +285,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.removeAllActions()
         
-        self.enumerateChildNodes(withName: "ball", using: {
-            ball, stop in
-            ball.removeAllActions()
-        })
+        currentGameState = .afterGame
         
-        self.enumerateChildNodes(withName: "playerBat", using: {
-            player, stop in
-            player.removeAllActions()
-        })
-        
-        self.enumerateChildNodes(withName: "enemyBat", using: {
-            enemy, stop in
-            enemy.removeAllActions()
-        })
+//        self.enumerateChildNodes(withName: "ball", using: {
+//            ball, stop in
+//            ball.removeAllActions()
+//        })
+//        
+//        self.enumerateChildNodes(withName: "playerBat", using: {
+//            player, stop in
+//            player.removeAllActions()
+//        })
+//        
+//        self.enumerateChildNodes(withName: "enemyBat", using: {
+//            enemy, stop in
+//            enemy.removeAllActions()
+//        })
         
         //move to gameover scene
         let changeSceneAction = SKAction.run(changeScene)
         let waitToChangeScene = SKAction.wait(forDuration: 2)
-        let changeSequence = SKAction.sequence([waitToChangeScene, changeSceneAction])
+        let fadeOutAction = SKAction.fadeOut(withDuration: 1)
+        let changeSequence = SKAction.sequence([waitToChangeScene,fadeOutAction, changeSceneAction])
         self.run(changeSequence)
         
     }
+    
     
     func changeScene(){
         
@@ -302,69 +322,70 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        for touch in touches {
+        if currentGameState == .preGame {
             
-            let location = touch.location(in: self)
+            startGame()
+
+        }
+        else if currentGameState == .inGame {
             
-            let playerMoveAction = SKAction.moveTo(x: location.x, duration: 0.01)
-            
-            if currentGameType == gameType.twoPlayer {
+            for touch in touches {
                 
-                if location.y > self.size.height/2 {
+                let location = touch.location(in: self)
+                
+                let playerMoveAction = SKAction.moveTo(x: location.x, duration: 0.01)
+                
+                if currentGameType == gameType.twoPlayer {
                     
-                    enemyBat.run(playerMoveAction)
+                    if location.y > self.size.height/2 {
+                        
+                        enemyBat.run(playerMoveAction)
+                    }
+                    
+                    if location.y < self.size.height/2 {
+                        
+                        playerBat.run(playerMoveAction)
+                    }
                 }
-                
-                if location.y < self.size.height/2 {
                     
+                else {
                     playerBat.run(playerMoveAction)
                 }
             }
-                
-            else {
-                playerBat.run(playerMoveAction)
-            }
-            
         }
-        
-        
-        
     }
+    
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        for touch in touches {
+        if currentGameState == .inGame {
             
-            let location = touch.location(in: self)
-            
-            
-            
-            let playerMoveAction = SKAction.moveTo(x: location.x, duration: 0.01)
-            
-            if currentGameType == gameType.twoPlayer {
+            for touch in touches {
                 
-                if location.y > self.size.height/2 {
+                let location = touch.location(in: self)
+                
+                let playerMoveAction = SKAction.moveTo(x: location.x, duration: 0.01)
+                
+                if currentGameType == gameType.twoPlayer {
                     
-                    enemyBat.run(playerMoveAction)
+                    if location.y > self.size.height/2 {
+                        
+                        enemyBat.run(playerMoveAction)
+                    }
+                    
+                    if location.y < self.size.height/2 {
+                        
+                        playerBat.run(playerMoveAction)
+                    }
                 }
-                
-                if location.y < self.size.height/2 {
                     
+                else {
                     playerBat.run(playerMoveAction)
                 }
             }
-            
-            else {
-                playerBat.run(playerMoveAction)
-            }
-            
         }
-        
-
-        
     }
     
     
@@ -392,22 +413,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    
     func enemyLogic(){
         
         switch currentGameType {
             
         case .easy:
-            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.7)
+            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.5)
             enemyBat.run(enemyMoveAction)
             break
             
         case .medium:
-            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.4)
+            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.2)
             enemyBat.run(enemyMoveAction)
             break
             
         case .hard:
-            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.2)
+            let enemyMoveAction = SKAction.moveTo(x: ball.position.x, duration: 0.09)
             enemyBat.run(enemyMoveAction)
             break
             
@@ -442,7 +464,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    
-    
-
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2017 Neil Houselander. All rights reserved.
 //
 
-//EXTRA TO DO - animate meu items onto scene 1 layer at a time
+
 
 import Foundation
 import SpriteKit

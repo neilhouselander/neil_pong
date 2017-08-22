@@ -42,16 +42,16 @@ class GameOver: SKScene {
         gameOverTitle.text = "Game Over"
         gameOverTitle.fontSize = 110
         gameOverTitle.fontColor = SKColor.white
-        gameOverTitle.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.65)
+        gameOverTitle.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.80)
         gameOverTitle.zPosition = 1
         self.addChild(gameOverTitle)
         
         let mainWinnerLabel = SKLabelNode(fontNamed: "LLPixel")
         mainWinnerLabel.text = "Winner: "
-        mainWinnerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        mainWinnerLabel.position = CGPoint(x: self.size.width*0.5, y: self.size.height*0.6)
         mainWinnerLabel.fontSize = 80
         mainWinnerLabel.fontColor = SKColor.white
-        mainWinnerLabel.position = CGPoint(x: 20, y: self.size.height*0.50)
+        
         mainWinnerLabel.zPosition = 1
         self.addChild(mainWinnerLabel)
         
@@ -60,7 +60,7 @@ class GameOver: SKScene {
         winnerLabel.text = "\(winner)"
         winnerLabel.fontSize = 70
         winnerLabel.fontColor = SKColor.white
-        winnerLabel.position = CGPoint(x: self.size.width * 0.70, y: self.size.height*0.5)
+        winnerLabel.position = CGPoint(x: self.size.width * 0.50, y: self.size.height*0.5)
         winnerLabel.zPosition = 1
         self.addChild(winnerLabel)
         
@@ -70,6 +70,7 @@ class GameOver: SKScene {
         restartLabel.fontSize = 80
         restartLabel.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.30)
         restartLabel.zPosition = 1
+        restartLabel.alpha = 0
         self.addChild(restartLabel)
         
         let fadeInAction = SKAction.fadeIn(withDuration: 1.0)
@@ -77,6 +78,9 @@ class GameOver: SKScene {
         let fadeInSequence = SKAction.sequence([waitAction, fadeInAction])
         winnerLabel.run(fadeInSequence)
         
+        let restartWaitAction = SKAction.wait(forDuration: 4.0)
+        let otherFadeInSequence = SKAction.sequence([restartWaitAction, fadeInAction])
+        restartLabel.run(otherFadeInSequence)
 
     }
     
@@ -96,9 +100,7 @@ class GameOver: SKScene {
             }
             
         }
-        
-        
+
     }
-    
 
 }
