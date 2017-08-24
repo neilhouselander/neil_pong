@@ -22,7 +22,7 @@ enum gameType {
     case twoPlayer
 }
 
-
+ var backingAudio = AVAudioPlayer()
 
 //end of globals
 
@@ -30,7 +30,7 @@ enum gameType {
 class GameViewController: UIViewController {
     
     
-    var backingAudio = AVAudioPlayer()
+   
     
 
     override func viewDidLoad() {

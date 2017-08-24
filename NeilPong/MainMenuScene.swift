@@ -10,6 +10,7 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 var currentGameType = gameType.easy
 
@@ -22,9 +23,13 @@ class MainMenuScene:SKScene {
     let gameSettingMediumLabel = SKLabelNode(fontNamed: "LLPixel")
     let gameSettingHardLabel = SKLabelNode(fontNamed: "LLPixel")
     let twoPlayerLabel = SKLabelNode(fontNamed: "LLPixel")
+    let musicLabel = SKLabelNode(fontNamed: "LLPixel")
+    
     
     override func didMove(to view: SKView) {
         
+        
+        //set up scene
         self.backgroundColor = SKColor.black
         
         
@@ -78,6 +83,15 @@ class MainMenuScene:SKScene {
         twoPlayerLabel.name = "twoPlayer"
         self.addChild(twoPlayerLabel)
         
+        musicLabel.text = "Music: on"
+        musicLabel.fontSize = 45
+        musicLabel.fontColor = SKColor.white
+        musicLabel.position = CGPoint(x: self.size.width/2, y: self.size.height*0.10)
+        musicLabel.zPosition = 1
+        musicLabel.name = "music"
+        self.addChild(musicLabel)
+        
+        
         animateOn()
         
     }
@@ -99,6 +113,21 @@ class MainMenuScene:SKScene {
             let pointOfTouch = touch.location(in: self)
             let nodeTapped = atPoint(pointOfTouch)
             
+            if nodeTapped.name == "music" {
+                if musicLabel.text == "Music: on" {
+                    musicLabel.text = "Music: off"
+                    
+                    backingAudio.stop()
+                    
+                }
+                else {
+                    musicLabel.text = "Music: on"
+                    backingAudio.play()
+                }
+            }
+            
+            else {
+                
             if nodeTapped.name == "easy" {
                 currentGameType = gameType.easy
                 print("easy")
@@ -122,12 +151,14 @@ class MainMenuScene:SKScene {
                 print("twoplayer")
                 
             }
-            
+                
             let sceneToMoveTo = GameScene(size: self.size)
             sceneToMoveTo.scaleMode = self.scaleMode
             let theTransition = SKTransition.fade(withDuration: 1.0)
             self.view?.presentScene(sceneToMoveTo, transition: theTransition)
-            
+                
+                
+            }
         }
     }
 }
