@@ -22,7 +22,7 @@ enum gameType {
     case twoPlayer
 }
 
- var backingAudio = AVAudioPlayer()
+ var backingAudio = AVAudioPlayer()//needs to be global so i can disable it in menu
 
 //end of globals
 

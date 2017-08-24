@@ -113,7 +113,8 @@ class MainMenuScene:SKScene {
             let pointOfTouch = touch.location(in: self)
             let nodeTapped = atPoint(pointOfTouch)
             
-            if nodeTapped.name == "music" {
+        //if its music DO NOT transition to game, just toggle music so wrap in an IF statemtent
+        if nodeTapped.name == "music" {
                 if musicLabel.text == "Music: on" {
                     musicLabel.text = "Music: off"
                     
@@ -122,11 +123,13 @@ class MainMenuScene:SKScene {
                 }
                 else {
                     musicLabel.text = "Music: on"
+                    
                     backingAudio.play()
                 }
             }
             
-            else {
+            //if its not music node then select game type, set gametype & play
+        else {
                 
             if nodeTapped.name == "easy" {
                 currentGameType = gameType.easy
@@ -151,7 +154,8 @@ class MainMenuScene:SKScene {
                 print("twoplayer")
                 
             }
-                
+            
+            //transition
             let sceneToMoveTo = GameScene(size: self.size)
             sceneToMoveTo.scaleMode = self.scaleMode
             let theTransition = SKTransition.fade(withDuration: 1.0)
