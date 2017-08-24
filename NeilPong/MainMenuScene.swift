@@ -17,6 +17,7 @@ class MainMenuScene:SKScene {
     
     let pixelFont = "LLPixel"
     let mainTitle = SKLabelNode(fontNamed: "LLPixel")
+    let creditName = SKLabelNode(fontNamed: "LLPixel")
     let gameSettingEasyLabel = SKLabelNode(fontNamed: "LLPixel")
     let gameSettingMediumLabel = SKLabelNode(fontNamed: "LLPixel")
     let gameSettingHardLabel = SKLabelNode(fontNamed: "LLPixel")
@@ -27,12 +28,19 @@ class MainMenuScene:SKScene {
         self.backgroundColor = SKColor.black
         
         
-        mainTitle.text = "Neil Pong !"
+        mainTitle.text = "Pong !"
         mainTitle.fontSize = 100
         mainTitle.fontColor = SKColor.white
         mainTitle.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.80)
         mainTitle.zPosition = 1
         self.addChild(mainTitle)
+        
+        creditName.text = "code by Neil Houselander"
+        creditName.fontSize = 30
+        creditName.fontColor = SKColor.gray
+        creditName.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.75)
+        creditName.zPosition = 1
+        self.addChild(creditName)
         
         
         gameSettingEasyLabel.text = "Easy"
@@ -122,15 +130,4 @@ class MainMenuScene:SKScene {
             
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

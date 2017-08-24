@@ -154,7 +154,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerTwoScoreLabel.fontSize = 65
         playerTwoScoreLabel.fontColor = SKColor.white
         playerTwoScoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height*0.60)
-        playerTwoScoreLabel.zRotation = CGFloat(Double.pi)
+        
+        if currentGameType == .twoPlayer {
+            
+            playerTwoScoreLabel.zRotation = CGFloat(Double.pi)
+        }
+        
         playerTwoScoreLabel.zPosition = 100
         self.addChild(playerTwoScoreLabel)
         
