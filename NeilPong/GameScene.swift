@@ -25,6 +25,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //sound effects -declare here to avoid lag
     let hitBatSound = SKAction.playSoundFileNamed("pongBlipSound.wav", waitForCompletion: false)
+    let gameOverSound = SKAction.playSoundFileNamed("game_over_sound.wav", waitForCompletion: false)
+    let lostPoint = SKAction.playSoundFileNamed("lost_point.wav", waitForCompletion: false)
     
     //physics
     struct PhysicsCategories{
@@ -255,6 +257,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         ball.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         ball.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        run(lostPoint)
         
         if playerWhoWon == playerBat {
             
@@ -273,7 +276,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerOneScoreLabel.text = "\(gameScore[0])"
         
         //check for game over if not get ball moving
-                if gameScore[0] > 10 || gameScore[1] > 10  {
+                if gameScore[0] > 1 || gameScore[1] > 1  {
         
                     gameOver()
                 }
@@ -292,26 +295,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         currentGameState = .afterGame
         
-//        self.enumerateChildNodes(withName: "ball", using: {
-//            ball, stop in
-//            ball.removeAllActions()
-//        })
-//        
-//        self.enumerateChildNodes(withName: "playerBat", using: {
-//            player, stop in
-//            player.removeAllActions()
-//        })
-//        
-//        self.enumerateChildNodes(withName: "enemyBat", using: {
-//            enemy, stop in
-//            enemy.removeAllActions()
-//        })
+        if backingAudio.isPlaying {
+            
+            backingAudio.setVolume(0, fadeDuration: 2.0)
+        }
         
         //move to gameover scene
         let changeSceneAction = SKAction.run(changeScene)
         let waitToChangeScene = SKAction.wait(forDuration: 2)
         let fadeOutAction = SKAction.fadeOut(withDuration: 1)
-        let changeSequence = SKAction.sequence([waitToChangeScene,fadeOutAction, changeSceneAction])
+        let gameOverSoundWaitTime = SKAction.wait(forDuration: 1)
+        let changeSequence = SKAction.sequence([gameOverSoundWaitTime,gameOverSound,waitToChangeScene,fadeOutAction, changeSceneAction])
         self.run(changeSequence)
         
     }

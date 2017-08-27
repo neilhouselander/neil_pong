@@ -19,6 +19,8 @@
 		C11DC5FD1F3B890A0052E947 /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DC5FC1F3B890A0052E947 /* MainMenuScene.swift */; };
 		C11DC5FF1F3B898B0052E947 /* LLPIXEL3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C11DC5FE1F3B898B0052E947 /* LLPIXEL3.ttf */; };
 		C11DC6011F3B97C50052E947 /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DC6001F3B97C50052E947 /* GameOver.swift */; };
+		C1B71D841F532C7F00C5954C /* game_over_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = C1B71D831F532C7F00C5954C /* game_over_sound.wav */; };
+		C1B71D861F5330D400C5954C /* lost_point.wav in Resources */ = {isa = PBXBuildFile; fileRef = C1B71D851F5330D400C5954C /* lost_point.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		C11DC5FC1F3B890A0052E947 /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 		C11DC5FE1F3B898B0052E947 /* LLPIXEL3.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LLPIXEL3.ttf; sourceTree = "<group>"; };
 		C11DC6001F3B97C50052E947 /* GameOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
+		C1B71D831F532C7F00C5954C /* game_over_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = game_over_sound.wav; sourceTree = "<group>"; };
+		C1B71D851F5330D400C5954C /* lost_point.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lost_point.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +74,8 @@
 			children = (
 				C11DC5F61F3B88300052E947 /* backingTrack.wav */,
 				C11DC5F81F3B88370052E947 /* pongBlipSound.wav */,
+				C1B71D831F532C7F00C5954C /* game_over_sound.wav */,
+				C1B71D851F5330D400C5954C /* lost_point.wav */,
 				C11DC5FE1F3B898B0052E947 /* LLPIXEL3.ttf */,
 				C11DC5EB1F3B87E40052E947 /* Assets.xcassets */,
 				C11DC5DE1F3B87E40052E947 /* AppDelegate.swift */,
@@ -146,9 +152,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C11DC5EA1F3B87E40052E947 /* Main.storyboard in Resources */,
+				C1B71D861F5330D400C5954C /* lost_point.wav in Resources */,
 				C11DC5F71F3B88300052E947 /* backingTrack.wav in Resources */,
 				C11DC5EC1F3B87E40052E947 /* Assets.xcassets in Resources */,
 				C11DC5F91F3B88370052E947 /* pongBlipSound.wav in Resources */,
+				C1B71D841F532C7F00C5954C /* game_over_sound.wav in Resources */,
 				C11DC5FF1F3B898B0052E947 /* LLPIXEL3.ttf in Resources */,
 				C11DC5EF1F3B87E40052E947 /* LaunchScreen.storyboard in Resources */,
 				C11DC5E31F3B87E40052E947 /* Actions.sks in Resources */,

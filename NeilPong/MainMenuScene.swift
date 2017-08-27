@@ -91,6 +91,18 @@ class MainMenuScene:SKScene {
         musicLabel.name = "music"
         self.addChild(musicLabel)
         
+        if backingAudio.isPlaying {
+            
+            if backingAudio.volume < 5 {
+                
+                backingAudio.setVolume(5, fadeDuration: 2.0)
+            }
+        }
+        else {
+            
+            musicLabel.text = "Music: off"
+        }
+        
         
         animateOn()
         
@@ -106,20 +118,28 @@ class MainMenuScene:SKScene {
         
     }
     
+    func trans() {
+        
+        //transition
+        let sceneToMoveTo = GameScene(size: self.size)
+        sceneToMoveTo.scaleMode = self.scaleMode
+        let theTransition = SKTransition.fade(withDuration: 1.0)
+        self.view?.presentScene(sceneToMoveTo, transition: theTransition)
+
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for touch in touches {
             
             let pointOfTouch = touch.location(in: self)
-            let nodeTapped = atPoint(pointOfTouch)
             
-        //if its music DO NOT transition to game, just toggle music so wrap in an IF statemtent
-        if nodeTapped.name == "music" {
+            if musicLabel.contains(pointOfTouch) {
+                
                 if musicLabel.text == "Music: on" {
                     musicLabel.text = "Music: off"
                     
                     backingAudio.stop()
-                    
                 }
                 else {
                     musicLabel.text = "Music: on"
@@ -128,40 +148,32 @@ class MainMenuScene:SKScene {
                 }
             }
             
-            //if its not music node then select game type, set gametype & play
-        else {
+            else {
+                //i put the transition into a function & called it to avoid transition happening when somewhere outside of the labels was touched
                 
-            if nodeTapped.name == "easy" {
-                currentGameType = gameType.easy
-                print("easy")
+                if gameSettingEasyLabel.contains(pointOfTouch) {
+                    
+                    currentGameType = gameType.easy
+                    trans()
+                }
                 
-            }
-            
-            if nodeTapped.name == "medium" {
-                currentGameType = gameType.medium
-                print("medium")
+                if gameSettingMediumLabel.contains(pointOfTouch) {
+                    
+                    currentGameType = gameType.medium
+                    trans()
+                }
                 
-            }
-            
-            if nodeTapped.name == "hard" {
-                currentGameType = gameType.hard
-                print("hard")
+                if gameSettingHardLabel.contains(pointOfTouch) {
+                    
+                    currentGameType = gameType.hard
+                    trans()
+                }
                 
-            }
-            
-            if nodeTapped.name == "twoPlayer" {
-                currentGameType = gameType.twoPlayer
-                print("twoplayer")
-                
-            }
-            
-            //transition
-            let sceneToMoveTo = GameScene(size: self.size)
-            sceneToMoveTo.scaleMode = self.scaleMode
-            let theTransition = SKTransition.fade(withDuration: 1.0)
-            self.view?.presentScene(sceneToMoveTo, transition: theTransition)
-                
-                
+                if twoPlayerLabel.contains(pointOfTouch) {
+                    
+                    currentGameType = gameType.twoPlayer
+                    trans()
+                }
             }
         }
     }

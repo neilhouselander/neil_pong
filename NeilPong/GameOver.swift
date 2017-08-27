@@ -44,6 +44,7 @@ class GameOver: SKScene {
         gameOverTitle.fontColor = SKColor.white
         gameOverTitle.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.80)
         gameOverTitle.zPosition = 1
+        gameOverTitle.alpha = 0
         self.addChild(gameOverTitle)
         
         let mainWinnerLabel = SKLabelNode(fontNamed: "LLPixel")
@@ -51,7 +52,7 @@ class GameOver: SKScene {
         mainWinnerLabel.position = CGPoint(x: self.size.width*0.5, y: self.size.height*0.6)
         mainWinnerLabel.fontSize = 80
         mainWinnerLabel.fontColor = SKColor.white
-        
+        mainWinnerLabel.alpha = 0
         mainWinnerLabel.zPosition = 1
         self.addChild(mainWinnerLabel)
         
@@ -74,13 +75,25 @@ class GameOver: SKScene {
         self.addChild(restartLabel)
         
         let fadeInAction = SKAction.fadeIn(withDuration: 1.0)
-        let waitAction = SKAction.wait(forDuration: 2.0)
-        let fadeInSequence = SKAction.sequence([waitAction, fadeInAction])
-        winnerLabel.run(fadeInSequence)
         
-        let restartWaitAction = SKAction.wait(forDuration: 4.0)
+        //how long before waiting to appear
+        let gameOverWait = SKAction.wait(forDuration: 1.0)
+        let winnerTitleFadeWait = SKAction.wait(forDuration: 2.5)
+        let winnerWaitAction = SKAction.wait(forDuration: 5.0)
+        let restartWaitAction = SKAction.wait(forDuration: 6.5)
+        
+        //sequences
+        let gameOverSequence = SKAction.sequence([gameOverWait, fadeInAction])
+        let winnerTitleFadeInSequence = SKAction.sequence([winnerTitleFadeWait, fadeInAction])
+        let fadeInSequence = SKAction.sequence([winnerWaitAction, fadeInAction])
         let otherFadeInSequence = SKAction.sequence([restartWaitAction, fadeInAction])
+
+        //run
+        gameOverTitle.run(gameOverSequence)
+        mainWinnerLabel.run(winnerTitleFadeInSequence)
+        winnerLabel.run(fadeInSequence)
         restartLabel.run(otherFadeInSequence)
+        
 
     }
     
