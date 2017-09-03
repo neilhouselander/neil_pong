@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:NeilPong.xcodeproj">
+      location = "self:/Users/nhouselander/Desktop/Coding/You Tube Tutorials/NeilPong/Pong.xcodeproj">
    </FileRef>
 </Workspace>

@@ -25,7 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //sound effects -declare here to avoid lag
     let hitBatSound = SKAction.playSoundFileNamed("pongBlipSound.wav", waitForCompletion: false)
-    let gameOverSound = SKAction.playSoundFileNamed("game_over_sound.wav", waitForCompletion: false)
+
     let lostPoint = SKAction.playSoundFileNamed("lost_point.wav", waitForCompletion: false)
     
     //physics
@@ -61,7 +61,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let maxAspectRatio: CGFloat = 16.0/9.0
         let playableWidth = size.height/maxAspectRatio
         let margin = (size.width - playableWidth)/2
-        gameArea = CGRect(x: margin, y: 0.00, width: playableWidth, height: size.height)
+        gameArea = CGRect(x: margin, y: 0.00, width: size.width, height: size.height)
         
         super.init(size: size)
         
@@ -179,6 +179,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         currentGameState = gameState.inGame
         
+        let goBall = SKAction.run {
+            self.generateRandomDirection()
+        }
+        let waitToGo = SKAction.wait(forDuration: 1.0)
+        let startUp = SKAction.sequence([waitToGo, goBall])
+        
         
         //remove tap to start label
         let tapLabelFadeAction = SKAction.fadeOut(withDuration: 0.2)
@@ -200,9 +206,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerBat.run(movePlayerOneOnScreen)
         enemyBat.run(movePlayerTwoOnScreen)
         
-        
+        run(startUp)
         //set initial ball velocity
-        generateRandomDirection()
+        //generateRandomDirection()
 
     }
     
@@ -257,8 +263,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         ball.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         ball.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        
+        //sound effect
         run(lostPoint)
         
+        //logic to add scores
         if playerWhoWon == playerBat {
             
             gameScore[0] += 1
@@ -276,7 +285,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerOneScoreLabel.text = "\(gameScore[0])"
         
         //check for game over if not get ball moving
-                if gameScore[0] > 1 || gameScore[1] > 1  {
+                if gameScore[0] == 11 || gameScore[1] == 11  {
         
                     gameOver()
                 }
@@ -304,8 +313,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let changeSceneAction = SKAction.run(changeScene)
         let waitToChangeScene = SKAction.wait(forDuration: 2)
         let fadeOutAction = SKAction.fadeOut(withDuration: 1)
-        let gameOverSoundWaitTime = SKAction.wait(forDuration: 1)
-        let changeSequence = SKAction.sequence([gameOverSoundWaitTime,gameOverSound,waitToChangeScene,fadeOutAction, changeSceneAction])
+        let changeSequence = SKAction.sequence([waitToChangeScene,fadeOutAction, changeSceneAction])
         self.run(changeSequence)
         
     }

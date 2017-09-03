@@ -34,14 +34,14 @@ class MainMenuScene:SKScene {
         
         
         mainTitle.text = "Pong !"
-        mainTitle.fontSize = 100
+        mainTitle.fontSize = 125
         mainTitle.fontColor = SKColor.white
         mainTitle.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.80)
         mainTitle.zPosition = 1
         self.addChild(mainTitle)
         
         creditName.text = "code by Neil Houselander"
-        creditName.fontSize = 30
+        creditName.fontSize = 50
         creditName.fontColor = SKColor.gray
         creditName.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.75)
         creditName.zPosition = 1
@@ -49,7 +49,7 @@ class MainMenuScene:SKScene {
         
         
         gameSettingEasyLabel.text = "Easy"
-        gameSettingEasyLabel.fontSize = 75
+        gameSettingEasyLabel.fontSize = 100
         gameSettingEasyLabel.fontColor = SKColor.white
         gameSettingEasyLabel.position = CGPoint(x: self.size.width + self.size.width, y: self.size.height * 0.60)
         gameSettingEasyLabel.zPosition = 1
@@ -58,7 +58,7 @@ class MainMenuScene:SKScene {
         
         
         gameSettingMediumLabel.text = "Medium"
-        gameSettingMediumLabel.fontSize = 75
+        gameSettingMediumLabel.fontSize = 100
         gameSettingMediumLabel.fontColor = SKColor.white
         gameSettingMediumLabel.position = CGPoint(x: -self.size.width - self.size.width, y: self.size.height * 0.50)
         gameSettingMediumLabel.zPosition = 1
@@ -67,7 +67,7 @@ class MainMenuScene:SKScene {
         
         
         gameSettingHardLabel.text = "Hard"
-        gameSettingHardLabel.fontSize = 75
+        gameSettingHardLabel.fontSize = 100
         gameSettingHardLabel.fontColor = SKColor.white
         gameSettingHardLabel.position = CGPoint(x: self.size.width + self.size.width, y: self.size.height * 0.40)
         gameSettingHardLabel.zPosition = 1
@@ -76,7 +76,7 @@ class MainMenuScene:SKScene {
         
         
         twoPlayerLabel.text = "2 Player"
-        twoPlayerLabel.fontSize = 75
+        twoPlayerLabel.fontSize = 100
         twoPlayerLabel.fontColor = SKColor.white
         twoPlayerLabel.position = CGPoint(x: -self.size.width - self.size.width, y: self.size.height * 0.30)
         twoPlayerLabel.zPosition = 1
@@ -84,7 +84,7 @@ class MainMenuScene:SKScene {
         self.addChild(twoPlayerLabel)
         
         musicLabel.text = "Music: on"
-        musicLabel.fontSize = 45
+        musicLabel.fontSize = 60
         musicLabel.fontColor = SKColor.white
         musicLabel.position = CGPoint(x: self.size.width/2, y: self.size.height*0.10)
         musicLabel.zPosition = 1

@@ -11,7 +11,7 @@ import SpriteKit
 
 class GameOver: SKScene {
     
-    
+    let gameOverSound = SKAction.playSoundFileNamed("game_over_sound.wav", waitForCompletion: false)
     
     let restartLabel = SKLabelNode(fontNamed: "LLPixel")
     
@@ -83,7 +83,7 @@ class GameOver: SKScene {
         let restartWaitAction = SKAction.wait(forDuration: 6.5)
         
         //sequences
-        let gameOverSequence = SKAction.sequence([gameOverWait, fadeInAction])
+        let gameOverSequence = SKAction.sequence([gameOverWait,gameOverSound, fadeInAction])
         let winnerTitleFadeInSequence = SKAction.sequence([winnerTitleFadeWait, fadeInAction])
         let fadeInSequence = SKAction.sequence([winnerWaitAction, fadeInAction])
         let otherFadeInSequence = SKAction.sequence([restartWaitAction, fadeInAction])

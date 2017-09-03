@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C11DC5DA1F3B87E40052E947"
-               BuildableName = "NeilPong.app"
-               BlueprintName = "NeilPong"
-               ReferencedContainer = "container:NeilPong.xcodeproj">
+               BuildableName = "Pong.app"
+               BlueprintName = "Pong"
+               ReferencedContainer = "container:Pong.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C11DC5DA1F3B87E40052E947"
-            BuildableName = "NeilPong.app"
-            BlueprintName = "NeilPong"
-            ReferencedContainer = "container:NeilPong.xcodeproj">
+            BuildableName = "Pong.app"
+            BlueprintName = "Pong"
+            ReferencedContainer = "container:Pong.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C11DC5DA1F3B87E40052E947"
-            BuildableName = "NeilPong.app"
-            BlueprintName = "NeilPong"
-            ReferencedContainer = "container:NeilPong.xcodeproj">
+            BuildableName = "Pong.app"
+            BlueprintName = "Pong"
+            ReferencedContainer = "container:Pong.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C11DC5DA1F3B87E40052E947"
-            BuildableName = "NeilPong.app"
-            BlueprintName = "NeilPong"
-            ReferencedContainer = "container:NeilPong.xcodeproj">
+            BuildableName = "Pong.app"
+            BlueprintName = "Pong"
+            ReferencedContainer = "container:Pong.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
